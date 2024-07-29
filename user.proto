@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "abi/grpc_user";
+
+message UserSigninRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message UserSigninResponse {
+  string AccessToken = 1;
+}
+
+service User {
+  rpc Signin (UserSigninRequest) returns (UserSigninResponse);
+}
