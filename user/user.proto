@@ -1,0 +1,47 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package user;
+
+option go_package = "abi/grpc_user";
+
+message SigninRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SigninResponse {
+  string AccessToken = 1;
+}
+
+message GetUserInfoRequest {}
+
+message GetUserInfoResponse {
+  enum Gender {
+    GENDER_UNKNOWN = 0;
+    GENDER_GIRL = 1;
+    GENDER_BOY = 2;
+  }
+
+  enum UserStatus {
+    USER_STATUS_NORMAL = 0;
+    USER_STATUS_BAN = 1;
+    USER_STATUS_BAN_NOT_ACTIVATED = 2;
+  }
+
+  int64 uid = 4;
+  string user_code = 5;
+  string nickname = 1;
+  string email = 2;
+  Gender gender = 3;
+  string avatar = 6;
+  google.protobuf.Timestamp birth = 7;
+  string phone_number = 8;
+  UserStatus status = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+service UserService {
+  rpc Signin(SigninRequest) returns(SigninResponse);
+  rpc GetUserInfo(GetUserInfoRequest) returns(GetUserInfoResponse);
+}
